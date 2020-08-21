@@ -43,7 +43,7 @@ if [[ $1 == "install" ]]; then
    cd /home/$user_logged_in/nitonltc
 
 
-   echo -e "[\e[92m+\e[39m] Downloading busyloop/lolcat"
+   echo -e "[\e[34mi\e[39m] Downloading busyloop/lolcat"
    # Installing lolcat
    wget https://github.com/busyloop/lolcat/archive/master.zip >/dev/null 2>&1
    unzip master.zip >/dev/null 2>&1
@@ -69,6 +69,7 @@ if [[ $1 == "install" ]]; then
    sudo rm -rf "/home/$user_logged_in/nitonltc/lolcat-master"
 
    sleep 1
+   echo -e "[\e[34mi\e[39m] Downloading NitonLTC..."
    wget https://github.com/nitonbots/nitonltc/archive/master.zip >/dev/null 2>&1
    unzip master.zip >/dev/null 2>&1
    cd nitonltc-master/ >/dev/null 2>&1
