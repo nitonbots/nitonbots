@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Admin?
+# Checking for root
 if [[ $EUID -ne 0 ]]; then
    echo "Run nitonltc with sudo."
    exit 1
@@ -53,7 +53,7 @@ if [[ $1 == "install" ]]; then
 
    gem install lolcat >/dev/null 2>&1
 
-   echo "Step 1 of 3, completed..." | lolcat -a -d 50
+   echo "Step 1 of 3 completed..." | lolcat -a -d 50
 
    sleep 2
 
@@ -74,17 +74,12 @@ if [[ $1 == "install" ]]; then
    unzip master.zip >/dev/null 2>&1
    cd nitonltc-master/ >/dev/null 2>&1
 
-   pip install -r requirements.txt >/dev/null 2>&1 && cho -e "[\e[92m+\e[39m] Installing bot application .."
-   echo "Step 2 of 3, completed..." | lolcat -a -d 50
+   pip install -r requirements.txt >/dev/null 2>&1 && echo -e "[\e[92m+\e[39m] Installing bot application .."
+   echo "Step 2 of 3 completed..." | lolcat -a -d 50
 
    sleep 2
    exit 1;
 
 fi
 
-command -v lolcat >/dev/null 2>&1 || {
-   echo -e "[\e[31m!\e[39m] Run nitonltc with the install command first..";
-   exit 1;
-}
-
-figlet -f ./roman.flf nitonltc | lolcat
+echo "Run the installer by running \"sudo ./nitonltc install\""
