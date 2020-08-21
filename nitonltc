@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Admin?
+if [[ $EUID -ne 0 ]]; then
+   echo "Run nitonltc with sudo."
+   exit 1
+fi
+
+if [[ $1 == "install" ]]; then
+
+   # Check for packages and install if not installed.
+
+   echo "Installing packages..."
+
+   user_logged_in=$(logname)
+
+   # Install figlet if not installed.
+   command -v figlet >/dev/null 2>&1 || {
+      sudo apt-get install -y figlet > /dev/null 2>&1 && echo -e "[\e[92m+\e[39m] FIGlet installed using apt-get..";
+   }
+
+   # Install git if not installed.
+   command -v git >/dev/null 2>&1 || {
+      sudo apt-get install -y git > /dev/null 2>&1 && echo -e "[\e[92m+\e[39m] Git installed using apt-get..";
+   }
+
+   # Install python if not installed.
+   command -v python >/dev/null 2>&1 || {
+      sudo apt-get install -y python > /dev/null 2>&1 && echo -e "[\e[92m+\e[39m] Python installed using apt-get..";
+   }
+
+   # Install ruby if not installed.
+   command -v ruby >/dev/null 2>&1 || {
+      sudo apt-get install -y ruby > /dev/null 2>&1 && echo -e "[\e[92m+\e[39m] Ruby installed using apt-get..";
+   }
+
+   # Install python-pip if not installed.
+   command -v python-pip >/dev/null 2>&1 || {
+      sudo apt-get install -y python-pip > /dev/null 2>&1 && echo -e "[\e[92m+\e[39m] Pip installed using apt-get..";
+   }
+
+   mkdir -p /home/$user_logged_in/nitonltc > /dev/null 2>&1 && echo -e "[\e[92m+\e[39m] Creating application folder..";
+   cd /home/$user_logged_in/nitonltc
+
+
+   echo -e "[\e[92m+\e[39m] Downloading busyloop/lolcat"
+   # Installing lolcat
+   wget https://github.com/busyloop/lolcat/archive/master.zip >/dev/null 2>&1
+   unzip master.zip >/dev/null 2>&1
+   cd lolcat-master/bin/ >/dev/null 2>&1
+
+   echo -e "[\e[92m+\e[39m] Installing busyloop/lolcat"
+
+   gem install lolcat >/dev/null 2>&1
+
+   echo "Step 1 of 3, completed..." | lolcat -a -d 50
+
+   sleep 2
+
+   cd /home/$user_logged_in/nitonltc
+
+   echo -e "[\e[92m+\e[39m] System update..." && sudo apt-get update -y >/dev/null 2>&1
+   echo -e "[\e[92m+\e[39m] System upgrade.." && sudo apt-get upgrade -y >/dev/null 2>&1
+
+
+   echo -e "[\e[92m+\e[39m] Installing bot application .."
+
+   sudo rm -rf "/home/$user_logged_in/nitonltc/master.zip"
+   sudo rm -rf "/home/$user_logged_in/nitonltc/lolcat-master"
+
+   sleep 1
+   wget https://github.com/nitonbots/nitonltc/archive/master.zip >/dev/null 2>&1
+   unzip master.zip >/dev/null 2>&1
+   cd nitonltc-master/ >/dev/null 2>&1
+
+   pip install -r requirements.txt >/dev/null 2>&1 && cho -e "[\e[92m+\e[39m] Installing bot application .."
+   echo "Step 2 of 3, completed..." | lolcat -a -d 50
+
+   sleep 2
+   exit 1;
+
+fi
+
+command -v lolcat >/dev/null 2>&1 || {
+   echo -e "[\e[31m!\e[39m] Run nitonltc with the install command first..";
+   exit 1;
+}
+
+figlet -f ./roman.flf nitonltc | lolcat
