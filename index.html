@@ -13,7 +13,7 @@
         border: 1px solid #9c9c9c;
         border-radius: 5px;
         display: inline-block;
-        padding: 40px;
+        padding: 35px;
         margin-top: 6px;
       }
       span.small {
@@ -24,6 +24,9 @@
         padding: 0;
         margin: 0;
       }
+      textarea {
+        text-align: left;
+      }
     </style>
   </head>
   <body>
@@ -32,8 +35,10 @@
     Install Niton LTC - (<a href="/nitonltc">download installer</a>) <br>
     <code>
       Navigate to the installer and run these commands:<br>
-      sudo chmod u+x nitonltc<br>
-      sudo ./nitonltc install
+      <textarea onclick="copyCommand()" id="command" rows="2" cols="35">
+sudo chmod u+x nitonltc
+sudo ./nitonltc install</textarea>
+
     </code>
     <br>
     <span class="small">Installers and programs written by <a href="//niton.me">niton</a></span>
@@ -47,6 +52,16 @@
       sudo ./nitonbtc install
     </code>
 
+
     -->
+    <script>
+      function copyCommand() {
+        var copyText = document.getElementById("command");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        alert("commands copied!");
+      }
+    </script>
   </body>
 </html>
